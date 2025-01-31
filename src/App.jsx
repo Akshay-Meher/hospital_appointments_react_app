@@ -4,10 +4,11 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import PatientRegistration from './components/PatientRegistration';
 
+
 const App = () => {
   return (
     <Router>
-      <div className="container mt-5">
+      <div className="container">
         <Routes>
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />

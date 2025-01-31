@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 
-const DoctorRegistration = () => {
+const DoctorRegistration = ({ role, setRole }) => {
     const [formData, setFormData] = useState({
         name: '',
         last_name: '',
@@ -112,136 +112,31 @@ const DoctorRegistration = () => {
     };
 
     return (
-        // <div className="container mt-5">
-        //     <h2 className="mb-4">Doctor Registration</h2>
-        //     {successMessage && <div className="alert alert-success">{successMessage}</div>}
-        //     {errorMessage && <div className="alert alert-danger">{errorMessage}</div>}
-        //     <form onSubmit={handleSubmit}>
-        //         <div className="row mb-3">
-        //             <div className="col-md-6">
-        //                 <label className="form-label">First Name</label>
-        //                 <input
-        //                     type="text"
-        //                     className={`form-control ${errors.name ? 'is-invalid' : ''}`}
-        //                     name="name"
-        //                     value={formData.name}
-        //                     onChange={handleChange}
-        //                 />
-        //                 {errors.name && <div className="invalid-feedback">{errors.name}</div>}
-        //             </div>
-        //             <div className="col-md-6">
-        //                 <label className="form-label">Last Name</label>
-        //                 <input
-        //                     type="text"
-        //                     className={`form-control ${errors.last_name ? 'is-invalid' : ''}`}
-        //                     name="last_name"
-        //                     value={formData.last_name}
-        //                     onChange={handleChange}
-        //                 />
-        //                 {errors.last_name && <div className="invalid-feedback">{errors.last_name}</div>}
-        //             </div>
-        //         </div>
-        //         <div className="row mb-3">
-        //             <div className="col-md-6">
-        //                 <label className="form-label">Email</label>
-        //                 <input
-        //                     type="email"
-        //                     className={`form-control ${errors.email ? 'is-invalid' : ''}`}
-        //                     name="email"
-        //                     value={formData.email}
-        //                     onChange={handleChange}
-        //                 />
-        //                 {errors.email && <div className="invalid-feedback">{errors.email}</div>}
-        //             </div>
-        //             <div className="col-md-6">
-        //                 <label className="form-label">Password</label>
-        //                 <input
-        //                     type="password"
-        //                     className={`form-control ${errors.password ? 'is-invalid' : ''}`}
-        //                     name="password"
-        //                     value={formData.password}
-        //                     onChange={handleChange}
-        //                 />
-        //                 {errors.password && <div className="invalid-feedback">{errors.password}</div>}
-        //             </div>
-        //         </div>
-        //         <div className="row mb-3">
-        //             <div className="col-md-6">
-        //                 <label className="form-label">Phone</label>
-        //                 <input
-        //                     type="text"
-        //                     className={`form-control ${errors.phone ? 'is-invalid' : ''}`}
-        //                     name="phone"
-        //                     value={formData.phone}
-        //                     onChange={handleChange}
-        //                 />
-        //                 {errors.phone && <div className="invalid-feedback">{errors.phone}</div>}
-        //             </div>
-        //             <div className="col-md-6">
-        //                 <label className="form-label">Specialization</label>
-        //                 <input
-        //                     type="text"
-        //                     className={`form-control ${errors.specialization ? 'is-invalid' : ''}`}
-        //                     name="specialization"
-        //                     value={formData.specialization}
-        //                     onChange={handleChange}
-        //                 />
-        //                 {errors.specialization && <div className="invalid-feedback">{errors.specialization}</div>}
-        //             </div>
-        //         </div>
-        //         <div className="row mb-3">
-        //             <div className="col-md-6">
-        //                 <label className="form-label">License Number</label>
-        //                 <input
-        //                     type="text"
-        //                     className={`form-control ${errors.license_number ? 'is-invalid' : ''}`}
-        //                     name="license_number"
-        //                     value={formData.license_number}
-        //                     onChange={handleChange}
-        //                 />
-        //                 {errors.license_number && <div className="invalid-feedback">{errors.license_number}</div>}
-        //             </div>
-        //             <div className="col-md-6">
-        //                 <label className="form-label">Years of Experience</label>
-        //                 <input
-        //                     type="number"
-        //                     className={`form-control ${errors.years_of_experience ? 'is-invalid' : ''}`}
-        //                     name="years_of_experience"
-        //                     value={formData.years_of_experience}
-        //                     onChange={handleChange}
-        //                 />
-        //                 {errors.years_of_experience && <div className="invalid-feedback">{errors.years_of_experience}</div>}
-        //             </div>
-        //         </div>
-        //         <div className="row mb-3">
-        //             <div className="col-md-6">
-        //                 <label className="form-label">Gender</label>
-        //                 <select
-        //                     className={`form-control ${errors.gender ? 'is-invalid' : ''}`}
-        //                     name="gender"
-        //                     value={formData.gender}
-        //                     onChange={handleChange}
-        //                 >
-        //                     <option value="">Select Gender</option>
-        //                     <option value="Male">Male</option>
-        //                     <option value="Female">Female</option>
-        //                     <option value="Other">Other</option>
-        //                 </select>
-        //                 {errors.gender && <div className="invalid-feedback">{errors.gender}</div>}
-        //             </div>
-        //         </div>
-        //         <button type="submit" className="btn btn-primary w-100">
-        //             Register
-        //         </button>
-        //     </form>
-        // </div>
-        <div className="container mt- p-4" style={{ maxWidth: '800px' }}>
-            <h2 className="mb-4 text-center text-primary">Doctor Registration</h2>
+
+        <div className="container " style={{ maxWidth: '600px' }}>
+
+
+            <div className="btn-group" style={{ width: "100%", margin: "10px 0 10px 0" }}>
+                <button
+                    className={`btn btn-sm ${role === 'Patient' ? 'btn-primary' : 'btn-outline-primary'}`}
+                    onClick={() => setRole('Patient')}
+                >
+                    Patient
+                </button>
+                <button
+                    className={`btn btn-sm ${role === 'Doctor' ? 'btn-primary' : 'btn-outline-primary'}`}
+                    onClick={() => setRole('Doctor')}
+                >
+                    Doctor
+                </button>
+            </div>
 
             {successMessage && <div className="alert alert-success">{successMessage}</div>}
             {errorMessage && <div className="alert alert-danger">{errorMessage}</div>}
 
             <form onSubmit={handleSubmit} className="shadow p-4 rounded bg-light border border-primary">
+                <h5 className="mb-1 text-center text-primary">Doctor Registration</h5>
+
                 <div className="row mb-3">
                     <div className="col-md-6">
                         <label className="form-label text-secondary">First Name</label>

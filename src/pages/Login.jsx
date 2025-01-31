@@ -15,7 +15,7 @@ const Login = () => {
     };
 
     return (
-        <div className='container col-10 col-sm-6'>
+        <div className='container mt-5 col-10 col-sm-6 shadow p-4 rounded bg-light border border-primary'>
             <div className="card p-4 shadow-sm">
                 <h3 className="mb-4">Login</h3>
                 <form onSubmit={handleSubmit}>

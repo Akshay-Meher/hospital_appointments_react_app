@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 
-const PatientRegistration = () => {
+const PatientRegistration = ({ role, setRole }) => {
     const [formData, setFormData] = useState({
         name: '',
         last_name: '',
@@ -105,13 +106,28 @@ const PatientRegistration = () => {
     };
 
     return (
-        <div className="container  p-4" style={{ maxWidth: '800px' }}>
-            <h2 className="mb-4 text-center text-primary">Patient Registration</h2>
+        <div className="container" style={{ maxWidth: '600px' }}>
+
+            <div className="btn-group" style={{ width: "100%", margin: "10px 0 10px 0" }}>
+                <button
+                    className={`btn btn-sm ${role === 'Patient' ? 'btn-primary' : 'btn-outline-primary'}`}
+                    onClick={() => setRole('Patient')}
+                >
+                    Patient
+                </button>
+                <button
+                    className={`btn btn-sm ${role === 'Doctor' ? 'btn-primary' : 'btn-outline-primary'}`}
+                    onClick={() => setRole('Doctor')}
+                >
+                    Doctor
+                </button>
+            </div>
 
             {successMessage && <div className="alert alert-success">{successMessage}</div>}
             {errorMessage && <div className="alert alert-danger">{errorMessage}</div>}
 
             <form onSubmit={handleSubmit} className="shadow p-4 rounded bg-light border border-primary">
+                <h5 className="mb-1 text-center text-primary">Patient Registration</h5>
                 <div className="row mb-3">
                     <div className="col-md-6">
                         <label className="form-label text-secondary">First Name</label>
@@ -225,6 +241,9 @@ const PatientRegistration = () => {
                     <button type="submit" className="btn btn-primary w-50">
                         Register
                     </button>
+                    <p className="mt-3 text-center">
+                        have an account? <Link to="/login">Login</Link>
+                    </p>
                 </div>
             </form>
         </div>

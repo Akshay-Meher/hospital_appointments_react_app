@@ -3,35 +3,14 @@ import PatientRegistration from '../components/PatientRegistration';
 import DoctorRegistration from '../components/DoctorRegistration';
 
 const Register = () => {
-    const [role, setRole] = useState('Patient'); // Default role is Patient
-
-    const handleRoleChange = (e) => {
-        setRole(e.target.value);
-    };
+    const [role, setRole] = useState('Patient');
 
     return (
-        <div className="container mt-1">
-            {/* Role Toggle Buttons */}
-            <div className="d-flex justify-content-center mb-1">
-                <button
-                    className={`btn btn-lg me-2 ${role === 'Patient' ? 'btn-primary' : 'btn-outline-primary'
-                        }`}
-                    onClick={() => setRole('Patient')}
-                >
-                    Patient
-                </button>
-                <button
-                    className={`btn btn-lg ${role === 'Doctor' ? 'btn-primary' : 'btn-outline-primary'
-                        }`}
-                    onClick={() => setRole('Doctor')}
-                >
-                    Doctor
-                </button>
-            </div>
-
+        <div>
             {/* Role-Based Forms */}
-            {role === 'Patient' && <PatientRegistration />}
-            {role === 'Doctor' && <DoctorRegistration />}
+            <div className="mt-4 p-3 rounded shadow-sm bg-light">
+                {role === 'Patient' ? <PatientRegistration role={role} setRole={setRole} /> : <DoctorRegistration role={role} setRole={setRole} />}
+            </div>
         </div>
     );
 };
