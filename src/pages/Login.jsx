@@ -1,6 +1,6 @@
 import axios from 'axios';
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { patientLoginRequest, patientRegisterRequest } from '../apis/authApis';
 import { useDispatch } from 'react-redux';
 import { loginSuccess } from '../redux/slices/authSlice';
@@ -9,6 +9,7 @@ const BASE_URL = import.meta.env.VITE_BASE_URL;
 
 const Login = () => {
     const dispatch = useDispatch();
+    const navigate = useNavigate();
     const [formData, setFormData] = useState({
         email: '',
         password: '',
@@ -73,14 +74,21 @@ const Login = () => {
                     dispatch(loginSuccess(resData));
                     localStorage.setItem('user', JSON.stringify(resData));
                     setSuccessMessage(response.data.message);
+                    navigate('/dashboard');
                 } else {
                     const response = await axios.post(`${BASE_URL}/doctor/login`, formData);
-                    console.log("response", response);
+                    const resData = response?.data?.data;
+                    dispatch(loginSuccess(resData));
+                    localStorage.setItem('user', JSON.stringify(resData));
                     setSuccessMessage(response.data.message);
                 }
             } catch (error) {
                 console.log("error with login", error);
-                setErrorMessage(error.response.data.message);
+                if (Array.isArray(error.response.data)) {
+                    setErrorMessage(error.response.data[0].message);
+                } else {
+                    setErrorMessage(error.response.data.message);
+                }
             }
 
         }

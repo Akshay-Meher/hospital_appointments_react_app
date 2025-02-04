@@ -1,0 +1,9 @@
+/* Allow scrolling, but hide the scrollbar */
+body {
+    overflow: scroll;
+}
+
+body::-webkit-scrollbar {
+    display: none;
+    /* Hide the scrollbar in WebKit browsers (Chrome, Safari) */
+}
