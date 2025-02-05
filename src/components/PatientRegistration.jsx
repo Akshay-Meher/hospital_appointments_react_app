@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { patientRegisterRequest } from '../apis/authApis';
 
 const PatientRegistration = ({ role, setRole }) => {
     const [formData, setFormData] = useState({
@@ -13,7 +14,7 @@ const PatientRegistration = ({ role, setRole }) => {
         date_of_birth: '',
         address: '',
     });
-
+    const navigate = useNavigate();
     const [errors, setErrors] = useState({});
     const [successMessage, setSuccessMessage] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
@@ -85,7 +86,8 @@ const PatientRegistration = ({ role, setRole }) => {
 
         if (validate()) {
             try {
-                const response = await axios.post('http://localhost:5000/patient/register', formData);
+                // const response = await axios.post('http://localhost:5000/patient/register', formData);
+                const response = await patientRegisterRequest(formData);
                 setSuccessMessage('Registration successful!');
                 setErrorMessage('');
                 setFormData({
@@ -98,8 +100,14 @@ const PatientRegistration = ({ role, setRole }) => {
                     date_of_birth: '',
                     address: '',
                 });
+                navigate('/login');
             } catch (error) {
-                setErrorMessage(error.response?.data?.message || 'Registration failed.');
+                console.log("error with registraion", error);
+                if (Array.isArray(error.response.data)) {
+                    setErrorMessage(error.response.data[0].message);
+                } else {
+                    setErrorMessage(error.response.data.message);
+                }
                 setSuccessMessage('');
             }
         }
@@ -107,6 +115,9 @@ const PatientRegistration = ({ role, setRole }) => {
 
     return (
         <div className="container" style={{ maxWidth: '600px' }}>
+
+            {successMessage && <div className="alert alert-success">{successMessage}</div>}
+            {errorMessage && <div className="alert alert-danger">{errorMessage}</div>}
 
             <div className="btn-group" style={{ width: "100%", margin: "10px 0 10px 0" }}>
                 <button
@@ -122,9 +133,6 @@ const PatientRegistration = ({ role, setRole }) => {
                     Doctor
                 </button>
             </div>
-
-            {successMessage && <div className="alert alert-success">{successMessage}</div>}
-            {errorMessage && <div className="alert alert-danger">{errorMessage}</div>}
 
             <form onSubmit={handleSubmit} className="shadow p-4 rounded bg-light border border-primary">
                 <h5 className="mb-1 text-center text-primary">Patient Registration</h5>

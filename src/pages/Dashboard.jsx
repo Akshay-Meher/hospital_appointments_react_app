@@ -1,9 +1,11 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { Container, Nav, Button, Row, Col, Card } from 'react-bootstrap';
+import { Container, Navbar, Nav, Button, Row, Col, Card } from 'react-bootstrap';
 import doctorImage from '../assets/assets_frontend/header_img.png';
-import { specialityData } from '../assets/assets_frontend/assets';
+import { doctors, specialityData } from '../assets/assets_frontend/assets';
 import grpProfile from '../assets/assets_frontend/group_profiles.png'
+import appointmentImg from "../assets/assets_frontend/appointment_img.png";
+import { Link } from 'react-router-dom';
 
 const Dashboard = () => {
 
@@ -22,20 +24,20 @@ const Dashboard = () => {
 
 
 
-  const doctors = [
-    {
-      name: 'Dr. Richard James',
-      specialty: 'General physician',
-      available: true,
-      image: '/api/placeholder/200/200'
-    },
-    // Repeat the same structure for other doctors
-  ];
+  // const doctors = [
+  //   {
+  //     name: 'Dr. Richard James',
+  //     specialty: 'General physician',
+  //     available: true,
+  //     image: '/api/placeholder/200/200'
+  //   },
+  //   // Repeat the same structure for other doctors
+  // ];
 
   return (
     <div className="min-vh-100 container">
       {/* Navigation */}
-      <Nav className="py-3 px-4 d-flex justify-content-between align-items-center bg-white">
+      {/* <Nav className="py-3 px-4 d-flex justify-content-between align-items-center bg-white">
         <div className="d-flex align-items-center">
           <img src="/api/placeholder/40/40" alt="Prescripto Logo" className="me-2" />
           <span className="h5 mb-0">Prescripto</span>
@@ -47,7 +49,26 @@ const Dashboard = () => {
           <Nav.Link href="#contact">CONTACT</Nav.Link>
         </div>
         <Button variant="primary" className="rounded-pill px-4">Create account</Button>
-      </Nav>
+      </Nav> */}
+
+      <Navbar expand="lg" bg="white" className="py-3 px-4">
+        <Container>
+          <Navbar.Brand href="#home" className="d-flex align-items-center">
+            <img src="/api/placeholder/40/40" alt="Prescripto Logo" className="me-2" />
+            <span className="h5 mb-0">Prescripto</span>
+          </Navbar.Brand>
+          <Navbar.Toggle aria-controls="navbar-nav" />
+          <Navbar.Collapse id="navbar-nav" className="d-flex justify-content-between align-items-center">
+            <Nav className="me-auto d-flex gap-4">
+              <Nav.Link href="#home">HOME</Nav.Link>
+              <Nav.Link href="#doctors">ALL DOCTORS</Nav.Link>
+              <Nav.Link href="#about">ABOUT</Nav.Link>
+              <Nav.Link href="#contact">CONTACT</Nav.Link>
+            </Nav>
+            {/* <Button variant="primary" className="rounded-pill px-4">Create account</Button> */}
+          </Navbar.Collapse>
+        </Container>
+      </Navbar>
 
       {/* Hero Section */}
       <div className="bg-primary text-white p-5 position-relative rounded">
@@ -59,7 +80,10 @@ const Dashboard = () => {
                 <img src={grpProfile} alt="" />
                 <p className="mb-4">Simply browse through our extensive list of trusted doctors, schedule your appointment hassle-free.</p>
               </div>
-              <Button variant="light" className="rounded-pill px-4">Book appointment →</Button>
+
+              <Button variant="light" className="rounded-pill px-4">
+                <Link to="/appointment">Book appointment →</Link>
+              </Button>
             </Col>
             <Col md={6}>
               <img src={doctorImage} alt="Doctors" className="img-fluid" />
@@ -96,14 +120,14 @@ const Dashboard = () => {
           {doctors.map((doctor, index) => (
             <Col key={index} md={4} lg={3} className="mb-4">
               <Card className="border-0 shadow-sm">
-                <Card.Img variant="top" src={doctor.image} />
+                <Card.Img style={{ backgroundColor: '#EAEFFF' }} className='img-fluid' variant="top" src={doctor.image} />
                 <Card.Body>
                   <div className="d-flex align-items-center mb-2">
                     <div className="bg-success rounded-circle me-2" style={{ width: '8px', height: '8px' }}></div>
                     <small className="text-success">Available</small>
                   </div>
                   <h5 className="mb-1">{doctor.name}</h5>
-                  <small className="text-muted">{doctor.specialty}</small>
+                  <small className="text-muted">{doctor.speciality}</small>
                 </Card.Body>
               </Card>
             </Col>
@@ -115,7 +139,7 @@ const Dashboard = () => {
       </Container>
 
       {/* Bottom CTA */}
-      <div className="bg-primary text-white p-5 mt-5 rounded">
+      {/* <div className="bg-primary text-white p-5 mt-5 rounded">
         <Container>
           <Row className="align-items-center">
             <Col md={6}>
@@ -123,7 +147,27 @@ const Dashboard = () => {
               <Button variant="light" className="rounded-pill px-4">Create account</Button>
             </Col>
             <Col md={6}>
-              <img src="/api/placeholder/500/400" alt="Doctor" className="img-fluid" />
+              <img src={appointmentImg} alt="Doctor" className="img-fluid" />
+            </Col>
+          </Row>
+        </Container>
+      </div> */}
+
+      <div className="bg-primary text-white p-5 mt-5 rounded">
+        <Container>
+          <Row className="align-items-center">
+            <Col md={6} className="mb-4 mb-md-0">
+              <h2 className="display-5 fw-bold mb-4">Book Appointment<br />With 100+ Trusted Doctors</h2>
+              <Button variant="light" className="rounded-pill px-4">Create account</Button>
+            </Col>
+            <Col md={6} className="d-none d-md-block">
+              {/* The image will be hidden on small screens */}
+              <img
+                src={appointmentImg}
+                alt="Doctor"
+                className="img-fluid"
+                style={{ height: 'auto', maxHeight: '350px', objectFit: 'cover' }}
+              />
             </Col>
           </Row>
         </Container>

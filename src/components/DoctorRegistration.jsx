@@ -1,5 +1,8 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { doctorRegisterRequest } from '../apis/authApis';
+import { Link, useNavigate } from 'react-router-dom';
+const BASE_URL = import.meta.env.VITE_BASE_URL;
 
 const DoctorRegistration = ({ role, setRole }) => {
     const [formData, setFormData] = useState({
@@ -13,7 +16,7 @@ const DoctorRegistration = ({ role, setRole }) => {
         years_of_experience: '',
         gender: '',
     });
-
+    const navigate = useNavigate();
     const [errors, setErrors] = useState({});
     const [successMessage, setSuccessMessage] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
@@ -90,7 +93,9 @@ const DoctorRegistration = ({ role, setRole }) => {
 
         if (validate()) {
             try {
-                const response = await axios.post('http://localhost:5000/doctor/register', formData);
+                // const response = await axios.post('http://localhost:5000/doctor/register', formData);
+                const response = await doctorRegisterRequest(formData);
+                console.log("response", response.data);
                 setSuccessMessage('Registration successful!');
                 setErrorMessage('');
                 setFormData({
@@ -104,8 +109,16 @@ const DoctorRegistration = ({ role, setRole }) => {
                     years_of_experience: '',
                     gender: '',
                 });
+                navigate('/login');
             } catch (error) {
-                setErrorMessage(error.response?.data?.message || 'Registration failed.');
+
+                console.log("error with registraion", error);
+                if (Array.isArray(error.response.data)) {
+                    setErrorMessage(error.response.data[0].message);
+                } else {
+                    setErrorMessage(error.response.data.message);
+                }
+                // setErrorMessage(error.response?.data?.message || 'Registration failed.');
                 setSuccessMessage('');
             }
         }
@@ -115,6 +128,8 @@ const DoctorRegistration = ({ role, setRole }) => {
 
         <div className="container " style={{ maxWidth: '600px' }}>
 
+            {successMessage && <div className="alert alert-success">{successMessage}</div>}
+            {errorMessage && <div className="alert alert-danger">{errorMessage}</div>}
 
             <div className="btn-group" style={{ width: "100%", margin: "10px 0 10px 0" }}>
                 <button
@@ -131,8 +146,7 @@ const DoctorRegistration = ({ role, setRole }) => {
                 </button>
             </div>
 
-            {successMessage && <div className="alert alert-success">{successMessage}</div>}
-            {errorMessage && <div className="alert alert-danger">{errorMessage}</div>}
+
 
             <form onSubmit={handleSubmit} className="shadow p-4 rounded bg-light border border-primary">
                 <h5 className="mb-1 text-center text-primary">Doctor Registration</h5>
@@ -267,6 +281,9 @@ const DoctorRegistration = ({ role, setRole }) => {
                     <button type="submit" className="btn btn-primary w-50">
                         Register
                     </button>
+                    <p className="mt-3 text-center">
+                        have an account? <Link to="/login">Login</Link>
+                    </p>
                 </div>
             </form>
         </div>
