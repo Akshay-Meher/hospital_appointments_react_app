@@ -10,7 +10,6 @@ const ProtectedRoute = ({ children }) => {
   useEffect(() => {
 
     const userToken = localStorage.getItem('user');
-    console.log()
     // Check if token exists and is valid
     if (userToken) {
       setIsLogin(true);

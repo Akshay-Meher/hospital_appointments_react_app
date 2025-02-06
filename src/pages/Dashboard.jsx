@@ -6,8 +6,13 @@ import { doctors, specialityData } from '../assets/assets_frontend/assets';
 import grpProfile from '../assets/assets_frontend/group_profiles.png'
 import appointmentImg from "../assets/assets_frontend/appointment_img.png";
 import { Link } from 'react-router-dom';
+import { useEffect } from 'react';
 
 const Dashboard = () => {
+
+  useEffect(() => {
+    console.log("jii");
+  }, []);
 
 
 
@@ -36,42 +41,9 @@ const Dashboard = () => {
 
   return (
     <div className="min-vh-100 container">
-      {/* Navigation */}
-      {/* <Nav className="py-3 px-4 d-flex justify-content-between align-items-center bg-white">
-        <div className="d-flex align-items-center">
-          <img src="/api/placeholder/40/40" alt="Prescripto Logo" className="me-2" />
-          <span className="h5 mb-0">Prescripto</span>
-        </div>
-        <div className="d-flex gap-4">
-          <Nav.Link href="#home">HOME</Nav.Link>
-          <Nav.Link href="#doctors">ALL DOCTORS</Nav.Link>
-          <Nav.Link href="#about">ABOUT</Nav.Link>
-          <Nav.Link href="#contact">CONTACT</Nav.Link>
-        </div>
-        <Button variant="primary" className="rounded-pill px-4">Create account</Button>
-      </Nav> */}
-
-      <Navbar expand="lg" bg="white" className="py-3 px-4">
-        <Container>
-          <Navbar.Brand href="#home" className="d-flex align-items-center">
-            <img src="/api/placeholder/40/40" alt="Prescripto Logo" className="me-2" />
-            <span className="h5 mb-0">Prescripto</span>
-          </Navbar.Brand>
-          <Navbar.Toggle aria-controls="navbar-nav" />
-          <Navbar.Collapse id="navbar-nav" className="d-flex justify-content-between align-items-center">
-            <Nav className="me-auto d-flex gap-4">
-              <Nav.Link href="#home">HOME</Nav.Link>
-              <Nav.Link href="#doctors">ALL DOCTORS</Nav.Link>
-              <Nav.Link href="#about">ABOUT</Nav.Link>
-              <Nav.Link href="#contact">CONTACT</Nav.Link>
-            </Nav>
-            {/* <Button variant="primary" className="rounded-pill px-4">Create account</Button> */}
-          </Navbar.Collapse>
-        </Container>
-      </Navbar>
 
       {/* Hero Section */}
-      <div className="bg-primary text-white p-5 position-relative rounded">
+      <div className="bg-primary text-white mt-3 p-5 position-relative rounded">
         <Container>
           <Row className="align-items-center">
             <Col md={6}>
@@ -174,7 +146,7 @@ const Dashboard = () => {
       </div>
 
       {/* Footer */}
-      <footer className="bg-light py-5">
+      {/* <footer className="bg-light py-5">
         <Container>
           <Row>
             <Col md={4}>
@@ -199,7 +171,7 @@ const Dashboard = () => {
           <hr className="my-4" />
           <p className="text-center text-muted small mb-0">Copyright © 2024 GreenStack - All Right Reserved.</p>
         </Container>
-      </footer>
+      </footer> */}
     </div>
   );
 };
