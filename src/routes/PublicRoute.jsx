@@ -8,10 +8,10 @@ const PublicRoute = ({ children }) => {
   const location = useLocation();
 
   if (isAuthenticated) {
-    return <Navigate to="/dashboard" state={{ from: location }} replace />;
+    return <Navigate to="/home" state={{ from: location }} replace />;
   }
 
-  return <Suspense fallback={<PageLoader/>}>{children}</Suspense>;
+  return <Suspense fallback={<PageLoader />}>{children}</Suspense>;
 };
 
 export default PublicRoute; 

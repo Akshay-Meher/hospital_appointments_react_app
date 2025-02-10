@@ -15,8 +15,6 @@ const Dashboard = () => {
   }, []);
 
 
-
-
   // Mock data for doctors
   const specialities = [
     { name: 'General physician', icon: '👨‍⚕️' },

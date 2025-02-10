@@ -1,6 +1,5 @@
 import { lazy } from 'react';
-import AboutPage from '../pages/About';
-import Dashboard from '../pages/Dashboard';
+import AboutPage from '../pages/AboutPage';
 
 const Login = lazy(() => import('../pages/Login'));
 const Register = lazy(() => import('../pages/Register'));
@@ -18,9 +17,4 @@ export const publicRoutes = [
     path: '/about',
     element: AboutPage,
   },
-  {
-    path: '/home',
-    element: Dashboard,
-  },
-
 ]; 

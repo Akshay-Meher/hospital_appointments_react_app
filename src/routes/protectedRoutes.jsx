@@ -5,7 +5,7 @@ const Dashboard = lazy(() => import('../pages/Dashboard'));
 
 export const protectedRoutes = [
   {
-    path: '/dashboard',
+    path: '/home',
     element: Dashboard,
   },
   {

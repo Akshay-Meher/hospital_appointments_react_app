@@ -1,20 +1,20 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Navbar, Nav, Container, Dropdown, Image } from "react-bootstrap";
 import { NavLink } from "react-router-dom";
 import '../css/navbar.css';
+import UserProfileDrodown from "./userProfileDrodown";
+import { useSelector } from "react-redux";
 
 
 const NavBar = () => {
-    const user = {
-        name: "Sardor",
-        email: "sardor@mail.com",
-        avatar: "/api/user-avatar.jpg", // Replace with the actual avatar URL
-        plan: "PRO",
-    };
 
-    const handleLogout = () => {
-        console.log("User logged out");
-    };
+    const { isAuthenticated } = useSelector((state) => state.auth);
+    const [isLogin, setIsLogin] = useState(false);
+    useEffect(() => {
+        console.log("isAuthenticated", isAuthenticated);
+        setIsLogin(isAuthenticated);
+    }, [isAuthenticated]);
+
 
     return (
         <Navbar expand="lg" bg="white" variant="light" className="shadow-sm py-3">
@@ -65,87 +65,9 @@ const NavBar = () => {
                     </Nav>
 
                     {/* User Profile Dropdown */}
-                    <Dropdown align="end">
-                        <Dropdown.Toggle
-                            as="div"
-                            className="d-flex align-items-center cursor-pointer border border-light rounded-pill px-3 py-2 shadow-sm"
-                            style={{
-                                backgroundColor: "#f8f9fa",
-                                cursor: "pointer",
-                            }}
-                        >
-                            <Image
-                                src={user.avatar}
-                                alt="User Avatar"
-                                roundedCircle
-                                width={30}
-                                height={30}
-                                className="me-2"
-                            />
-                            <div className="d-flex flex-column">
-                                <span className="fw-bold">{user.name}</span>
-                                <span
-                                    className="text-uppercase badge bg-primary text-white small"
-                                    style={{
-                                        fontSize: "10px",
-                                        padding: "2px 4px",
-                                    }}
-                                >
-                                    {user.plan}
-                                </span>
-                            </div>
-                            <i className="bi bi-chevron-down ms-2 text-secondary"></i>
-                        </Dropdown.Toggle>
-
-                        <Dropdown.Menu
-                            className="shadow-sm"
-                            style={{
-                                borderRadius: "12px",
-                                minWidth: "250px",
-                                padding: "16px",
-                                backgroundColor: "#ffffff",
-                                fontFamily: "'Inter', sans-serif",
-                            }}
-                        >
-                            {/* User Info */}
-                            <div className="d-flex align-items-center mb-3">
-                                <Image
-                                    src={user.avatar}
-                                    alt="User Avatar"
-                                    roundedCircle
-                                    width={40}
-                                    height={40}
-                                    className="me-3"
-                                />
-                                <div>
-                                    <h6 className="mb-0 fw-bold">{user.name}</h6>
-                                    <small className="text-muted">{user.email}</small>
-                                </div>
-                            </div>
-                            <Dropdown.Divider />
-
-                            {/* Dropdown Menu Items */}
-                            <Dropdown.Item href="/profile" className="d-flex align-items-center py-2">
-                                <i className="bi bi-gear me-2 text-primary"></i> Profile Settings
-                            </Dropdown.Item>
-                            <Dropdown.Item href="/help" className="d-flex align-items-center py-2">
-                                <i className="bi bi-question-circle me-2 text-primary"></i> Help Center
-                            </Dropdown.Item>
-                            <Dropdown.Item href="#" className="d-flex align-items-center py-2">
-                                <i className="bi bi-moon me-2 text-primary"></i> Dark Mode
-                            </Dropdown.Item>
-                            <Dropdown.Item href="/upgrade" className="d-flex align-items-center py-2">
-                                <i className="bi bi-arrow-up-right-circle me-2 text-primary"></i> Upgrade Plan
-                            </Dropdown.Item>
-                            <Dropdown.Divider />
-                            <Dropdown.Item
-                                onClick={handleLogout}
-                                className="d-flex align-items-center py-2 text-danger"
-                            >
-                                <i className="bi bi-box-arrow-right me-2"></i> Sign Out
-                            </Dropdown.Item>
-                        </Dropdown.Menu>
-                    </Dropdown>
+                    {
+                        isLogin && <UserProfileDrodown />
+                    }
                 </Navbar.Collapse>
             </Container>
         </Navbar>

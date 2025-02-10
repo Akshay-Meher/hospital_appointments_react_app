@@ -6,7 +6,7 @@ import { publicRoutes } from "./publicRoutes";
 import { protectedRoutes } from "./protectedRoutes";
 import PageLoader from "../components/PageLoader";
 import NavBar from "../components/NavBar";
-import AboutPage from "../pages/About";
+import AboutPage from "../pages/AboutPage";
 import Footer from "../pages/footer";
 
 const NotFound = lazy(() => import("../components/NotFound"));
