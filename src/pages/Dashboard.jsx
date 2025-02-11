@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Container, Navbar, Nav, Button, Row, Col, Card } from 'react-bootstrap';
 import doctorImage from '../assets/assets_frontend/header_img.png';
@@ -7,11 +7,25 @@ import grpProfile from '../assets/assets_frontend/group_profiles.png'
 import appointmentImg from "../assets/assets_frontend/appointment_img.png";
 import { Link } from 'react-router-dom';
 import { useEffect } from 'react';
+import axios from 'axios';
+import { fetchAllDoctors } from '../apis/doctorApis';
 
 const Dashboard = () => {
 
+  // const [doctors, setDoctors] = useState([]);
+
   useEffect(() => {
-    console.log("jii");
+
+    const fetchData = async () => {
+      try {
+        const allResponse = await fetchAllDoctors();
+        console.log("fetchAllDoctors", allResponse);
+      } catch (err) {
+        console.log("fetchAllDoctors err", err);
+      }
+    };
+
+    fetchData();
   }, []);
 
 
@@ -108,20 +122,6 @@ const Dashboard = () => {
         </div>
       </Container>
 
-      {/* Bottom CTA */}
-      {/* <div className="bg-primary text-white p-5 mt-5 rounded">
-        <Container>
-          <Row className="align-items-center">
-            <Col md={6}>
-              <h2 className="display-5 fw-bold mb-4">Book Appointment<br />With 100+ Trusted Doctors</h2>
-              <Button variant="light" className="rounded-pill px-4">Create account</Button>
-            </Col>
-            <Col md={6}>
-              <img src={appointmentImg} alt="Doctor" className="img-fluid" />
-            </Col>
-          </Row>
-        </Container>
-      </div> */}
 
       <div className="bg-primary text-white p-5 mt-5 rounded">
         <Container>

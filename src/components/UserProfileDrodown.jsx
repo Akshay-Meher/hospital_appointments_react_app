@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { logout } from '../redux/slices/authSlice';
 import { Link } from 'react-router-dom';
+import { logOut } from '../apis/authApis';
 
 function UserProfileDrodown() {
 
@@ -19,6 +20,19 @@ function UserProfileDrodown() {
             const cookieName = cookie.split("=")[0].trim();
             document.cookie = `${cookieName}=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=/`;
         });
+
+        const fetchData = async () => {
+
+            try {
+                const allResponse = await logOut();
+                console.log("logOut", allResponse);
+            } catch (err) {
+                console.log("logOut err", err);
+            }
+        };
+
+        fetchData();
+
         dispatch(logout());
         navigate('/login');
     };

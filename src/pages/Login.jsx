@@ -68,7 +68,7 @@ const Login = () => {
                     const response = await patientLoginRequest(formData);
                     // console.log("response", response);
                     const resData = response?.data?.data;
-                    // console.log("resData", resData);
+                    console.log("login resData", resData);
                     dispatch(loginSuccess(resData));
                     // localStorage.setItem('user', JSON.stringify(resData));
                     setSuccessMessage(response.data.message);
@@ -183,7 +183,14 @@ const Login = () => {
                                     <i className="bi bi-question-circle me-1"></i>
                                     Forgot Password?
                                 </Link>
+
+                                <p className="text-muted small mb-0">
+                                    <Link to="/otp-login" className="text-decoration-none fw-medium">
+                                        Login With OTP
+                                    </Link>
+                                </p>
                             </div>
+
                         </form>
 
                         <div className="text-center mt-4 pt-3 border-top">
