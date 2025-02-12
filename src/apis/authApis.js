@@ -32,12 +32,6 @@ export function doctorLoginRequest(data) {
 
 
 export function logOut(role) {
-    let logoutRole;
-    if (role == 'doctor') {
-        logoutRole = 'doctor';
-    } else {
-        logoutRole = 'patient';
-    }
     return axiosInstance.get(logOutUrl)
 }
 

@@ -112,6 +112,9 @@ function UserProfileDrodown() {
                 <Dropdown.Item as={Link} to="/profile" className="d-flex align-items-center py-2">
                     <i className="bi bi-gear me-2 text-primary"></i> Profile Settings
                 </Dropdown.Item>
+                <Dropdown.Item as={Link} to="/my-appointments" className="d-flex align-items-center py-2">
+                    <i className="bi bi-gear me-2 text-primary"></i> My Appointments
+                </Dropdown.Item>
                 <Dropdown.Item
                     onClick={handleLogout}
                     className="d-flex align-items-center py-2 text-danger"

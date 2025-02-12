@@ -1,8 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { Container, Card, Form, Button, Row, Col } from 'react-bootstrap';
-import { sendLoginOtp } from '../apis/authApis';
+import { patientLoginRequest, sendLoginOtp, verifyLoginOtp } from '../apis/authApis';
+import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { loginSuccess } from '../redux/slices/authSlice';
 
 const OtpLoginForm = () => {
+
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
     const [formData, setFormData] = useState({
         email: '',
         role: '',
@@ -32,14 +38,6 @@ const OtpLoginForm = () => {
         setLoading(true);
 
         try {
-            // Replace with your actual API call
-            // const response = await fetch('your-api-endpoint/send-otp', {
-            //     method: 'POST',
-            //     headers: {
-            //         'Content-Type': 'application/json',
-            //     },
-            //     body: JSON.stringify(formData),
-            // });
 
             const response = await sendLoginOtp(formData);
             // const data = await response.json();
@@ -84,27 +82,23 @@ const OtpLoginForm = () => {
         setLoading(true);
 
         try {
-            // Replace with your actual API call
-            const response = await fetch('your-api-endpoint/verify-otp', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    ...formData,
-                    otp: otp.join('')
-                }),
-            });
 
-            const data = await response.json();
+            const response = await verifyLoginOtp({ ...formData, otp: otp.join('') });
+            // const data = await response.json();
+            const data = response?.data;
+            console.log("verifyLoginOtp response", response);
+            // console.log("verifyLoginOtp response?.data", data);
+            console.log("verifyLoginOtp response.data.success", response.data.success);
 
-            if (response.ok) {
-                // Handle successful verification (e.g., redirect or set auth token)
+            if (response.data.success) {
+                dispatch(loginSuccess(data));
+                navigate('/home');
                 console.log('Successfully verified!');
             } else {
                 setError(data.message || 'Invalid OTP. Please try again.');
             }
         } catch (err) {
+            console.log("error in verify OTP", err);
             setError('Something went wrong. Please try again.');
         } finally {
             setLoading(false);
@@ -120,7 +114,7 @@ const OtpLoginForm = () => {
     };
 
     return (
-        <Container className="min-vh-100 d-flex align-items-center justify-content-center py-5">
+        <Container className="min-vh-100 d-flex align-items-center justify-content-center py-5 ">
             <Card
                 className="border-0 shadow-sm"
                 style={{
