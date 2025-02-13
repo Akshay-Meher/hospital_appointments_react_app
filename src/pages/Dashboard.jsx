@@ -9,47 +9,10 @@ import { Link } from 'react-router-dom';
 import { useEffect } from 'react';
 import axios from 'axios';
 import { fetchAllDoctors } from '../apis/doctorApis';
+import DoctorsList from '../components/DoctorsList';
 
 const Dashboard = () => {
 
-  // const [doctors, setDoctors] = useState([]);
-
-  useEffect(() => {
-
-    const fetchData = async () => {
-      try {
-        const allResponse = await fetchAllDoctors();
-        console.log("fetchAllDoctors", allResponse);
-      } catch (err) {
-        console.log("fetchAllDoctors err", err);
-      }
-    };
-
-    fetchData();
-  }, []);
-
-
-  // Mock data for doctors
-  const specialities = [
-    { name: 'General physician', icon: '👨‍⚕️' },
-    { name: 'Gynecologist', icon: '👩‍⚕️' },
-    { name: 'Dermatologist', icon: '🧑‍⚕️' },
-    { name: 'Pediatrician', icon: '👶' },
-    { name: 'Neurologist', icon: '🧠' },
-    { name: 'Gastroenterologist', icon: '👨‍⚕️' },
-  ];
-
-
-
-  // const doctors = [
-  //   {
-  //     name: 'Dr. Richard James',
-  //     specialty: 'General physician',
-  //     available: true,
-  //     image: '/api/placeholder/200/200'
-  //   },
-  //   // Repeat the same structure for other doctors
-  // ];
 
   return (
     <div className="min-vh-100 container">
@@ -66,7 +29,7 @@ const Dashboard = () => {
               </div>
 
               <Button variant="light" className="rounded-pill px-4">
-                <Link to="/appointment">Book appointment →</Link>
+                <Link style={{ style: "none" }} to="/doctors">Book appointment →</Link>
               </Button>
             </Col>
             <Col md={6}>
@@ -97,9 +60,12 @@ const Dashboard = () => {
       </Container>
 
       {/* Top Doctors Section */}
-      <Container className="py-5">
+      {/* <Container className="py-5">
         <h2 className="text-center mb-3">Top Doctors to Book</h2>
         <p className="text-center text-muted mb-5">Simply browse through our extensive list of trusted doctors.</p>
+
+
+
         <Row>
           {doctors.map((doctor, index) => (
             <Col key={index} md={4} lg={3} className="mb-4">
@@ -120,7 +86,9 @@ const Dashboard = () => {
         <div className="text-center mt-4">
           <Button variant="light" className="rounded-pill px-4">more</Button>
         </div>
-      </Container>
+      </Container> */}
+
+      <DoctorsList />
 
 
       <div className="bg-primary text-white p-5 mt-5 rounded">
@@ -128,7 +96,7 @@ const Dashboard = () => {
           <Row className="align-items-center">
             <Col md={6} className="mb-4 mb-md-0">
               <h2 className="display-5 fw-bold mb-4">Book Appointment<br />With 100+ Trusted Doctors</h2>
-              <Button variant="light" className="rounded-pill px-4">Create account</Button>
+              <Button variant="light" className="rounded-pill px-4">Book Appointment</Button>
             </Col>
             <Col md={6} className="d-none d-md-block">
               {/* The image will be hidden on small screens */}
@@ -142,34 +110,6 @@ const Dashboard = () => {
           </Row>
         </Container>
       </div>
-
-      {/* Footer */}
-      {/* <footer className="bg-light py-5">
-        <Container>
-          <Row>
-            <Col md={4}>
-              <img src="/api/placeholder/40/40" alt="Prescripto Logo" className="mb-3" />
-              <p className="text-muted small">Lorem ipsum is simply dummy text of the printing and typesetting industry. Lorem ipsum has been the industry's standard dummy text ever since the 1500s.</p>
-            </Col>
-            <Col md={4}>
-              <h5 className="mb-4">COMPANY</h5>
-              <Nav className="flex-column">
-                <Nav.Link href="#home">Home</Nav.Link>
-                <Nav.Link href="#about">About us</Nav.Link>
-                <Nav.Link href="#contact">Contact us</Nav.Link>
-                <Nav.Link href="#privacy">Privacy policy</Nav.Link>
-              </Nav>
-            </Col>
-            <Col md={4}>
-              <h5 className="mb-4">GET IN TOUCH</h5>
-              <p className="mb-2">+1-222-456-7890</p>
-              <p>greentechnologies@gmail.com</p>
-            </Col>
-          </Row>
-          <hr className="my-4" />
-          <p className="text-center text-muted small mb-0">Copyright © 2024 GreenStack - All Right Reserved.</p>
-        </Container>
-      </footer> */}
     </div>
   );
 };
