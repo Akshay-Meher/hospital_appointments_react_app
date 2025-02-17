@@ -8,6 +8,8 @@ import PageLoader from "../components/PageLoader";
 import NavBar from "../components/NavBar";
 import AboutPage from "../pages/AboutPage";
 import Footer from "../pages/footer";
+import { normalRoutes } from "./normalRoutes";
+import NormalRoute from "./NormalRoute";
 
 const NotFound = lazy(() => import("../components/NotFound"));
 
@@ -41,6 +43,19 @@ const Router = () => {
               <ProtectedRoute>
                 <Element />
               </ProtectedRoute>
+            }
+          />
+        ))}
+
+        {/* Normal Routes */}
+        {normalRoutes.map(({ path, element: Element }) => (
+          <Route
+            key={path}
+            path={path}
+            element={
+              <NormalRoute>
+                <Element />
+              </NormalRoute>
             }
           />
         ))}

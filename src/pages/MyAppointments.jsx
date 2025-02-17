@@ -1,123 +1,187 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { useSelector } from 'react-redux';
+import { cancleAppointment, getAllAppointsByUserId } from '../apis/appointmentAPis';
+import { formatAppointmentDate } from '../utils/date_time_helpers';
 
 const MyAppointments = () => {
-    const [appointments, setAppointments] = useState([
-        {
-            id: 1,
-            doctor: "Dr. Richard James",
-            specialty: "General physician",
-            address: "57th Cross, Richmond",
-            addressLine2: "Circle, Church Road, London",
-            date: "25, July, 2024",
-            time: "8:30 PM",
-            status: "upcoming",
-            image: "/api/placeholder/120/120"
-        },
-        {
-            id: 2,
-            doctor: "Dr. Richard James",
-            specialty: "General physician",
-            address: "57th Cross, Richmond",
-            addressLine2: "Circle, Church Road, London",
-            date: "25, July, 2024",
-            time: "8:30 PM",
-            status: "unpaid",
-            image: "/api/placeholder/120/120"
-        },
-        {
-            id: 3,
-            doctor: "Dr. Richard James",
-            specialty: "General physician",
-            address: "57th Cross, Richmond",
-            addressLine2: "Circle, Church Road, London",
-            date: "25, July, 2024",
-            time: "8:30 PM",
-            status: "paid",
-            image: "/api/placeholder/120/120"
+  const [appointments, setAppointments] = useState([
+    {
+      id: 1,
+      doctor: "Dr. Richard James",
+      specialty: "General physician",
+      address: "57th Cross, Richmond",
+      addressLine2: "Circle, Church Road, London",
+      date: "25, July, 2024",
+      time: "8:30 PM",
+      status: "upcoming",
+      image: "/api/placeholder/120/120"
+    },
+    {
+      id: 2,
+      doctor: "Dr. Richard James",
+      specialty: "General physician",
+      address: "57th Cross, Richmond",
+      addressLine2: "Circle, Church Road, London",
+      date: "25, July, 2024",
+      time: "8:30 PM",
+      status: "unpaid",
+      image: "/api/placeholder/120/120"
+    },
+    {
+      id: 3,
+      doctor: "Dr. Richard James",
+      specialty: "General physician",
+      address: "57th Cross, Richmond",
+      addressLine2: "Circle, Church Road, London",
+      date: "25, July, 2024",
+      time: "8:30 PM",
+      status: "paid",
+      image: "/api/placeholder/120/120"
+    }
+  ]);
+
+
+  const [changeAppointments, setChangeAppointments] = useState(false);
+
+
+  const { user } = useSelector((state) => state.auth);
+
+  useEffect(() => {
+    console.log("useEffect", user);
+    const payload = {
+      id: user.id,
+      role: user.role
+    }
+    console.log("Payload", payload);
+
+    const fetchAppointments = async (payload) => {
+      try {
+
+        const response = await getAllAppointsByUserId(payload);
+        console.log("response", response);
+        if (response?.data?.success) {
+          const allAppointments = response?.data?.data?.appointments;
+          console.log("response", response);
+          console.log("allAppointments", allAppointments);
+          setAppointments(allAppointments);
         }
-    ]);
 
-    const handleCancel = async (id) => {
-        try {
-            // API call would go here
-            const confirmCancel = window.confirm("Are you sure you want to cancel this appointment?");
-            if (confirmCancel) {
-                setAppointments(appointments.filter(app => app.id !== id));
-            }
-        } catch (error) {
-            console.error("Error canceling appointment:", error);
-        }
-    };
+      } catch (error) {
+        console.log("err fetchAppointments", error);
+      }
+    }
 
-    const handlePayment = async (id) => {
-        try {
-            // Payment API integration would go here
-            setAppointments(appointments.map(app =>
-                app.id === id ? { ...app, status: 'paid' } : app
-            ));
-        } catch (error) {
-            console.error("Error processing payment:", error);
-        }
-    };
+    fetchAppointments(payload);
+  }, [changeAppointments]);
 
-    return (
-        <div className="appointments-container">
-            <h1>My Appointments</h1>
 
-            <div className="appointments-list">
-                {appointments.map((appointment) => (
-                    <div key={appointment.id} className="appointment-card">
-                        <div className="appointment-content">
-                            <div className="doctor-image">
-                                <img src={appointment.image} alt={appointment.doctor} />
-                            </div>
+  const handleCancel = async (id) => {
+    try {
+      // API call would go here
+      // const confirmCancel = window.confirm("Are you sure you want to cancel this appointment?");
 
-                            <div className="appointment-details">
-                                <h2>{appointment.doctor}</h2>
-                                <p className="specialty">{appointment.specialty}</p>
+      const response = await cancleAppointment({ appointment_id: id });
+      console.log("response", response);
+      if (response?.data?.success) {
+        setChangeAppointments(!changeAppointments);
+      }
 
-                                <div className="address-section">
-                                    <p className="label">Address:</p>
-                                    <p className="address">
-                                        {appointment.address}<br />
-                                        {appointment.addressLine2}
-                                    </p>
-                                </div>
+    } catch (error) {
+      console.error("Error canceling appointment:", error);
+    }
+  };
 
-                                <div className="datetime-section">
-                                    <p className="label">Date & Time:</p>
-                                    <p className="datetime">{appointment.date} | {appointment.time}</p>
-                                </div>
-                            </div>
+  const handlePayment = async (id) => {
+    try {
+      // Payment API integration would go here
+      setAppointments(appointments.map(app =>
+        app.id === id ? { ...app, status: 'paid' } : app
+      ));
+    } catch (error) {
+      console.error("Error processing payment:", error);
+    }
+  };
 
-                            <div className="appointment-actions">
-                                {appointment.status === 'unpaid' && (
-                                    <button
-                                        className="pay-button"
-                                        onClick={() => handlePayment(appointment.id)}
-                                    >
-                                        Pay here
-                                    </button>
-                                )}
-                                {appointment.status === 'paid' && (
-                                    <button className="paid-button" disabled>
-                                        Paid
-                                    </button>
-                                )}
-                                <button
-                                    className="cancel-button"
-                                    onClick={() => handleCancel(appointment.id)}
-                                >
-                                    Cancel appointment
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                ))}
+  return (
+    <div className="appointments-container">
+      <h1>My Appointments</h1>
+
+      <div className="appointments-list">
+        {appointments.map((appointment) => {
+          const { doctorDetails } = appointment
+
+          return <div key={appointment.id} className="appointment-card">
+            <div className="appointment-content">
+              <div className="doctor-image">
+                <img src={`http://localhost:5000/${doctorDetails?.profile_image}`} alt={`${doctorDetails?.name} ${doctorDetails?.last_name}`} />
+              </div>
+
+              <div className="appointment-details">
+                <h2>DR.{`${doctorDetails?.name} ${doctorDetails?.last_name}`}</h2>
+                <p className="specialty">{doctorDetails?.specialization}</p>
+
+                <div className="address-section">
+                  <p className="label">about:</p>
+                  <p className="address">
+                    {doctorDetails?.about}
+                  </p>
+                </div>
+
+                <div className="datetime-section">
+                  <p className="label">Date & Time:</p>
+                  <p className="datetime">{formatAppointmentDate(appointment.appointment_date)} | {appointment.appointment_time}</p>
+                </div>
+              </div>
+
+              <div className="appointment-actions">
+                {appointment.status === 'confirmed' && (
+                  <button
+                    className="pay-button"
+                    onClick={() => handlePayment(appointment.id)}
+                  >
+                    Pay here
+                  </button>
+                )}
+
+                {/* <button
+                  className="pay-button"
+                  onClick={() => handlePayment(appointment.id)}
+                >
+                  Pay here
+                </button> */}
+
+                {appointment.status === 'paid' && (
+                  <button className="paid-button" disabled>
+                    Paid
+                  </button>
+                )}
+
+
+                {
+                  appointment.status !== 'cancelled' ? (
+                    <button
+                      className="cancel-button"
+                      onClick={() => handleCancel(appointment.id)}
+                    >
+                      Cancel appointment
+                    </button>
+                  )
+                    : (<button
+                      className="cancel-button bg-danger text-white"
+                      disabled
+                    // onClick={() => handleCancel(appointment.id)}
+                    >
+                      Appointment Cancelled
+                    </button>)
+                }
+              </div>
             </div>
+          </div>
+        })}
+      </div>
 
-            <style jsx>{`
+      <style jsx>{`
         .appointments-container {
           max-width: 1200px;
           margin: 2rem auto;
@@ -230,7 +294,8 @@ const MyAppointments = () => {
         }
 
         .cancel-button:hover {
-          background: #f8f8f8;
+          background:rgb(245, 31, 31);
+          color: white
         }
 
         @media (max-width: 768px) {
@@ -265,8 +330,8 @@ const MyAppointments = () => {
           }
         }
       `}</style>
-        </div>
-    );
+    </div>
+  );
 };
 
 export default MyAppointments;

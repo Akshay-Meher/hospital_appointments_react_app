@@ -91,7 +91,7 @@ const OtpLoginForm = () => {
             console.log("verifyLoginOtp response.data.success", response.data.success);
 
             if (response.data.success) {
-                dispatch(loginSuccess(data));
+                dispatch(loginSuccess(data.data));
                 navigate('/home');
                 console.log('Successfully verified!');
             } else {

@@ -4,6 +4,7 @@ import DoctorsListing from '../pages/DoctorsListing';
 import ProfilePage from '../pages/ProfilePage';
 import DoctorDetails from '../pages/DoctorDetails';
 import MyAppointments from '../pages/MyAppointments';
+import AboutPage from '../pages/AboutPage';
 
 const Dashboard = lazy(() => import('../pages/Dashboard'));
 
@@ -26,11 +27,12 @@ export const protectedRoutes = [
   },
   {
     path: "/doctor/:id",
-    element: DoctorDetails
+    element: DoctorAppointmentPage
   },
   {
     path: "/profile",
     element: ProfilePage
-  }
+  },
+
 
 ]; 

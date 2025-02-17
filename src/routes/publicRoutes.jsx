@@ -14,10 +14,7 @@ export const publicRoutes = [
     path: '/register',
     element: Register,
   },
-  {
-    path: '/about',
-    element: AboutPage,
-  },
+
   {
     path: '/otp-login',
     element: OtpLoginForm,

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Calendar, Clock, Star, MapPin, Phone, Award, Users, Stethoscope, ChevronLeft, CheckCircle, AlertCircle } from 'lucide-react';
 
 
-const DoctorProfileCard = () => {
+const DoctorProfileCard = ({ doctor }) => {
 
 
     const DoctorStats = () => (
@@ -12,7 +12,7 @@ const DoctorProfileCard = () => {
                     <div className="d-flex align-items-center">
                         <Award className="text-primary me-2" size={24} />
                         <div>
-                            <h4 className="mb-0">10+</h4>
+                            <h4 className="mb-0">{doctor.years_of_experience}+</h4>
                             <small className="text-muted">Years Exp.</small>
                         </div>
                     </div>
@@ -62,9 +62,9 @@ const DoctorProfileCard = () => {
                         <div className="text-center">
                             <div className="position-relative d-inline-block">
                                 <img
-                                    src="/api/placeholder/200/200"
+                                    src={`http://localhost:5000/${doctor.profile_image}`}
                                     alt="Doctor"
-                                    className="img-fluid rounded-4 mb-3"
+                                    className="bg-primary img-fluid rounded-4 mb-3"
                                     style={{ maxWidth: '200px' }}
                                 />
                                 <span className="position-absolute bottom-0 end-0 p-2 bg-success rounded-circle">
@@ -90,13 +90,13 @@ const DoctorProfileCard = () => {
                     <div className="col-lg-9">
                         <div className="d-flex justify-content-between align-items-start flex-wrap">
                             <div>
-                                <h2 className="mb-1">Dr. Richard James</h2>
+                                <h2 className="mb-1">Dr.{doctor.name} {doctor.last_name}</h2>
                                 <p className="text-muted mb-3">
-                                    <span className="badge bg-primary-subtle text-primary me-2">MBBS</span>
-                                    <span className="badge bg-primary-subtle text-primary">General Physician</span>
+                                    <span className="badge bg-primary-subtle text-primary me-2">{doctor.degree}</span>
+                                    <span className="badge bg-primary-subtle text-primary">{doctor.specialization}</span>
                                 </p>
                             </div>
-                            <span className="badge bg-primary px-3 py-2 rounded-pill fs-6">$50/Visit</span>
+                            <span className="badge bg-primary px-3 py-2 rounded-pill fs-6">Rs.{doctor.fees}/visit</span>
                         </div>
 
                         <div className="mb-4">
@@ -106,7 +106,7 @@ const DoctorProfileCard = () => {
                             </div>
                             <div className="d-flex align-items-center">
                                 <Phone size={18} className="text-primary me-2" />
-                                <span>+1 234 567 8900</span>
+                                <span>+{doctor.phone}</span>
                             </div>
                         </div>
 
